@@ -6,15 +6,37 @@ function App() {
   const [answer, setAnswer] = useState('')
   const [display, setDisplay] = useState([])
 
-  const calculate = (num1, sym, num2) => {
-    let answer = eval(num1, sym, num2)
-    setAnswer(answer)
+  const calculate = () => {
+    // concat numbers together
+    console.log(display)
+    let arr = [...display]
+    let newArr = []
+    let final = []
+    for(let i=0; i<display.length; i++){
+      if(isNaN(arr[i])){
+        newArr.push(arr[i])
+      }else if(!isNaN(arr[i]) && !isNaN(arr[i - 1]) && arr[i -1]){
+        let num1 = arr[i]
+        let num2 = arr[i-1]
+        newArr.shift()
+        newArr.push('' + num2 + num1)
+      }else{
+        newArr.push(arr[i])
+      }
+    }
+    // order of operations and solve 
+    console.log(newArr)
+    for(let i=0; i<newArr.length; i++){
+      if(newArr[i] == '*'){
+        newArr[i-1] * 
+      }
+    }
   }
 
   const equation = (val) => {
-    let temp = [...display]
-    temp.push(val)
-    setDisplay(temp)
+    const arr = [...display]
+    arr.push(val)
+    setDisplay(arr)
   }
 
   return (
@@ -42,7 +64,7 @@ function App() {
         <button className='num' onClick={() => equation(0)}>0</button>
         <button className='num' onClick={() => equation('.')}>.</button>
         <button className='num' onClick={() => equation('-')}>-</button>
-        <button className='num equal'>=</button>
+        <button className='num equal' onClick={calculate()}>=</button>
 
       </div>
       </div>
